@@ -464,7 +464,7 @@ def polygon(window, circle, number_of_segments, color, thickness):
 def run_test_fancy_polygon():
     """ Tests the   fancy_polygon   function. """
     # ------------------------------------------------------------------
-    # TODO: 9. Implement this TEST function.
+    # DONE: 9. Implement this TEST function.
     #   It TESTS the   fancy_polygon   function defined below.
     #   Include at least ** 1 ** ADDITIONAL test (that YOU write).
     #
@@ -511,13 +511,12 @@ def run_test_fancy_polygon():
     # ------------------------------------------------------------------
 
     # Test 4
-    title = 'FANCY POLYGON test 4:  20 lime green lines on blue circle, ' \
-            'hops = 7.'
-    window = rg.RoseWindow(480, 350, title)
+    title = 'FANCY POLYGON test 4'
+    window = rg.RoseWindow(400, 500, title)
 
-    circle = rg.Circle(rg.Point(240, 165), 150)
-    circle.fill_color = 'blue'
-    fancy_polygon(window, circle, 20, 7, 'lime green', 5)
+    circle = rg.Circle(rg.Point(200, 250), 150)
+    circle.fill_color = 'white'
+    fancy_polygon(window, circle, 70, 30, 'purple', 1)
     window.close_on_mouse_click()
 
 def fancy_polygon(window, circle, number_of_lines, hops_to_next_point, color, thickness):
@@ -578,7 +577,7 @@ def fancy_polygon(window, circle, number_of_lines, hops_to_next_point, color, th
       :type thickness:       int
     """
     # ------------------------------------------------------------------
-    # TODO: 10. Implement and test this function.
+    # DONE: 10. Implement and test this function.
     #   Note that you should write its TEST function first (above).
     #
     # IMPLEMENTATION REQUIREMENT:
@@ -593,24 +592,18 @@ def fancy_polygon(window, circle, number_of_lines, hops_to_next_point, color, th
     # ------------------------------------------------------------------
 
     circle.attach_to(window)
-    circle.attach_to(window)
     points = generate_points_on_circle(circle, number_of_lines)
-    point1 = points[0]
-    for k in range(number_of_lines - 2):
-        line_start = rg.Line(point1, points[hops_to_next_point])
-        line_start.color = color
-        line_start.thickness = thickness
-        line_start.attach_to(window)
-        if k + 2 * hops_to_next_point:
-            distance = (k + 2 * hops_to_next_point) - number_of_lines
-        lines = rg.Line(points[k + hops_to_next_point], points[distance])
+    for k in range(len(points)):
+        if k + hops_to_next_point >= len(points):
+            distance = k + hops_to_next_point - len(points)
+        else:
+            distance = (k + hops_to_next_point)
+        lines = rg.Line(points[distance - hops_to_next_point], points[
+            distance])
         lines.color = color
         lines.thickness = thickness
+        lines.arrow = 'last'
         lines.attach_to(window)
-        lines_end = rg.Line(points[len(points) - 1], point1)
-        lines_end.color = color
-        lines_end.thickness = thickness
-        lines_end.attach_to(window)
         window.render()
     window.render()
 
